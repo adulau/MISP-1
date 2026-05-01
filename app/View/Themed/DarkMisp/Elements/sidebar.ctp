@@ -28,8 +28,8 @@ if (!empty($me)):
       <div>
 
         <input type="checkbox" id="eventsAsideMenu" class="peer hidden"
-          <?= $location == '/events/index' || 
-              $location == '/attributes/index' ? 'checked' : '' ?>
+          <?= str_starts_with($location, '/events/index') || 
+              str_starts_with($location, '/attributes/index') ? 'checked' : '' ?>
         >
 
         <label 
@@ -50,7 +50,7 @@ if (!empty($me)):
           <div>
             <a 
               href="<?= $baseurl . '/events/index' ?>" 
-              class="flex items-center space-x-3 px-4 py-2 hover:bg-gray-800 transition-colors rounded-lg pl-8 <?= $location == '/events/index' ? ' text-mispblue' : 'text-gray-400' ?>">
+              class="flex items-center space-x-3 px-4 py-2 hover:bg-gray-800 transition-colors rounded-lg pl-8 <?= str_starts_with($location, '/events/index') ? ' text-mispblue' : 'text-gray-400' ?>">
               <span class="min-w-4 text-sm">
                 <i class="far fa-calendar"></i>
               </span>
@@ -60,7 +60,7 @@ if (!empty($me)):
           <div>
             <a  
               href="<?= $baseurl . '/attributes/index' ?>"
-              class="flex items-center space-x-3 px-4 py-2 hover:bg-gray-800 transition-colors rounded-lg pl-8 <?= $location == '/attributes/index' ? ' text-mispblue' : 'text-gray-400' ?>">
+              class="flex items-center space-x-3 px-4 py-2 hover:bg-gray-800 transition-colors rounded-lg pl-8 <?= str_starts_with($location, '/attributes/index') ? ' text-mispblue' : 'text-gray-400' ?>">
               <span class="min-w-4 text-sm">
                 <i class="fas fa-list"></i>
               </span>
@@ -408,6 +408,22 @@ if (!empty($me)):
 
   <div class="p-4 border-t border-gray-800">
     <div class="flex items-center justify-around">
+      <button
+        type="button"
+        data-theme="Default" 
+        class="setTheme flex items-center justify-center p-2 hover:bg-gray-800 transition-colors rounded-lg text-gray-400" title="Settings">
+        <i class="far fa-lightbulb text-l"></i>
+      </a>
+      <button
+        type="button"
+        data-theme="DarkMisp"
+        class="setTheme flex items-center justify-center p-2 hover:bg-gray-800 transition-colors rounded-lg text-gray-400" title="Admin">
+        <i class="fas fa-lightbulb text-l"></i>
+      </a>
+    </div>
+  </div>
+  <div class="p-4 border-t border-gray-800">
+    <div class="flex items-center justify-around">
       <a
         href="<?= $baseurl . '/servers/serverSettings' ?>" 
         class="flex items-center justify-center p-2 hover:bg-gray-800 transition-colors rounded-lg text-gray-400" title="Settings">
@@ -428,6 +444,28 @@ if (!empty($me)):
   </div>
 </aside>
 
+<script>
+$(document).ready(function() {
+    $('.setTheme').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var theme = String($(this).data('theme') || '');
+        var safeTheme = encodeURIComponent(theme);
+
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $baseurl; ?>/user_settings/setTheme/' + safeTheme,
+            success: function(data) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('<?php echo __('Failed to toggle Beta UI. Please try again.'); ?>');
+            }
+        });
+    });
+});
+</script>
 <?php
 endif;
 ?>

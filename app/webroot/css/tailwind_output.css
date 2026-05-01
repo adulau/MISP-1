@@ -14,7 +14,6 @@
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-slate-700: oklch(37.2% 0.044 257.287);
-    --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
@@ -797,6 +796,9 @@
   }
   .border-gray-800 {
     border-color: var(--color-gray-800);
+  }
+  .border-mispblue {
+    border-color: var(--mispblue);
   }
   .border-primary {
     border-color: var(--primary);
@@ -2246,13 +2248,6 @@
       display: block;
     }
   }
-  .hover\:bg-gray-100 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-100);
-      }
-    }
-  }
   .hover\:bg-gray-800 {
     &:hover {
       @media (hover: hover) {
@@ -2271,6 +2266,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--mispdarkblue);
+      }
+    }
+  }
+  .hover\:bg-mispnight {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--mispnight);
       }
     }
   }
@@ -2323,6 +2325,46 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .\[\&\>a\]\:block {
+    &>a {
+      display: block;
+    }
+  }
+  .\[\&\>a\]\:h-full {
+    &>a {
+      height: 100%;
+    }
+  }
+  .\[\&\>a\]\:w-full {
+    &>a {
+      width: 100%;
+    }
+  }
+  .\[\&\>a\]\:px-3 {
+    &>a {
+      padding-inline: calc(var(--spacing) * 3);
+    }
+  }
+  .\[\&\>a\]\:py-2 {
+    &>a {
+      padding-block: calc(var(--spacing) * 2);
+    }
+  }
+  .\[\&\>span\]\:block {
+    &>span {
+      display: block;
+    }
+  }
+  .\[\&\>span\]\:px-3 {
+    &>span {
+      padding-inline: calc(var(--spacing) * 3);
+    }
+  }
+  .\[\&\>span\]\:py-2 {
+    &>span {
+      padding-block: calc(var(--spacing) * 2);
     }
   }
 }

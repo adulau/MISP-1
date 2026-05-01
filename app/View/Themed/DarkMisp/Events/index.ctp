@@ -68,11 +68,11 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
                     array(
                         'tag' => 'li', 
                         'escape' => false,
-                        'class' => 'px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100'), 
+                        'class' => 'rounded-md border border-mispblue bg-mispblue text-white hover:bg-mispdarkblue [&>a]:block [&>a]:w-full [&>a]:h-full [&>a]:px-3 [&>a]:py-2'), 
                     null, 
                     array(
                         'tag' => 'li', 
-                        'class' => 'px-3 py-2 rounded-md border border-gray-200 text-gray-400 cursor-not-allowed', 
+                        'class' => 'rounded-md border border-mispblue bg-mispnight text-gray-400 cursor-not-allowed [&>span]:block [&>span]:px-3 [&>span]:py-2', 
                         'escape' => false, 
                         'disabledTag' => 'span'));
                 $pagination .= $this->Paginator->numbers(
@@ -82,17 +82,17 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
                         'tag' => 'li', 
                         'currentClass' => 'bg-blue-600 text-white border-blue-600',
                         'currentTag' => 'span',
-                        'class' => 'px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100'));
+                        'class' => 'px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-mispblue'));
                 $pagination .= $this->Paginator->next(
                     __('next') . ' &raquo;', 
                     array(
                         'tag' => 'li', 
                         'escape' => false,
-                        'class' => 'px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100'), 
+                        'class' => 'rounded-md border border-mispblue bg-mispblue text-white hover:bg-mispdarkblue [&>a]:block [&>a]:w-full [&>a]:h-full [&>a]:px-3 [&>a]:py-2'), 
                     null, 
                     array(
                         'tag' => 'li', 
-                        'class' => 'px-3 py-2 rounded-md border border-gray-200 text-gray-400 cursor-not-allowed',
+                        'class' => 'rounded-md border border-mispblue bg-mispnight text-gray-400 cursor-not-allowed [&>span]:block [&>span]:px-3 [&>span]:py-2',
                         'escape' => false, 
                         'disabledTag' => 'span'));
                 
@@ -236,8 +236,6 @@ $(function () {
 });
 </script>
 
-------------------------
-<?php return; ?>
 
 <div>
     <div>

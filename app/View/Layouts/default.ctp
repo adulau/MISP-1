@@ -8,12 +8,12 @@
     <title><?= h($title_for_layout), ' - ', h(Configure::read('MISP.title_text') ?: 'MISP') ?></title>
     <?php
         $css = [
-            // ['bootstrap', ['preload' => true]],
+            ['bootstrap', ['preload' => true]],
             ['bootstrap-datepicker', ['preload' => true]],
             ['bootstrap-colorpicker', ['preload' => true]],
             ['font-awesome', ['preload' => true]],
             ['chosen.min', ['preload' => true]],
-            // ['main', ['preload' => true]],
+            ['main', ['preload' => true]],
             ['tailwind_output', ['preload' => true]],
             ['print', ['media' => 'print']],
         ];
@@ -47,7 +47,7 @@
         <div id="gray_out"></div>
         <div id="container">
             <?php
-                // echo $this->element('global_menu');
+                echo $this->element('global_menu');
                 echo $this->element('header');
                 echo $this->element('sidebar');
                 $topPadding = '50';
