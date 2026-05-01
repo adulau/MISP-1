@@ -63,7 +63,7 @@
                 ?>
             </div>
         </div>
-        <main class="dark text-grey-400 fixed top-16 bottom-0 right-0 left-64 overflow-auto bg-background text-foreground transition-all">
+        <main class="dark fixed top-16 left-64 bottom-0 right-0 text-grey-400 overflow-auto bg-background text-foreground transition-all">
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
                 <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
                 <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
