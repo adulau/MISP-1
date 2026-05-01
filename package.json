@@ -1,0 +1,30 @@
+{
+  "name": "misp",
+  "version": "2.5.0",
+  "description": "MISP is an open source software solution for collecting, storing, distributing and sharing cyber security indicators and threats about cyber security incidents analysis and malware analysis. MISP is designed by and for incident analysts, security and ICT professionals or malware reversers to support their day-to-day operations to share structured information efficiently.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/damasch/MISP.git"
+  },
+  "keywords": [
+    "misp"
+  ],
+  "author": "damasch",
+  "license": "GNU Affero General Public License",
+  "bugs": {
+    "url": "https://github.com/damasch/MISP/issues"
+  },
+  "homepage": "https://github.com/damasch/MISP#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^4.2.4"
+  }
+}
