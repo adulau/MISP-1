@@ -14,7 +14,6 @@
             ['font-awesome', ['preload' => true]],
             ['chosen.min', ['preload' => true]],
             ['main', ['preload' => true]],
-            ['tailwind_output', ['preload' => true]],
             ['print', ['media' => 'print']],
         ];
         if (Configure::read('MISP.custom_css')) {
@@ -37,70 +36,59 @@
     ?>
 </head>
 <body data-controller="<?= h($this->params['controller']) ?>" data-action="<?= h($this->params['action']) ?>">
-    <div id="root">
-        <div id="popover_form" class="ajax_popover_form"></div>
-        <div id="popover_form_large" class="ajax_popover_form ajax_popover_form_large"></div>
-        <div id="popover_form_x_large" class="ajax_popover_form ajax_popover_form_x_large"></div>
-        <div id="popover_matrix" class="ajax_popover_form ajax_popover_matrix"></div>
-        <div id="popover_box" class="popover_box"></div>
-        <div id="confirmation_box"></div>
-        <div id="gray_out"></div>
-        <div id="container">
-            <?php
-                echo $this->element('global_menu');
-                echo $this->element('header');
-                echo $this->element('sidebar');
-                $topPadding = '50';
-                if (!empty($debugMode) && $debugMode != 'debugOff') {
-                    $topPadding = '0';
-                }
-            ?>
-        </div>
-        <div id="flashContainer" style="padding-top:<?php echo $topPadding; ?>px; !important;">
-            <div id="main-view-container" class="container-fluid">
-                <?php
-                    echo $this->Flash->render();
-                ?>
-            </div>
-        </div>
-        <main class="dark text-grey-400 fixed top-16 bottom-0 right-0 left-64 overflow-auto bg-background text-foreground transition-all">
-            <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
-                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
-            </div>
-
-            <div class="<?= $this->request->here() == '/api/openapi' ? 'bg-white' : 'p-4' ?>">
-            <?php
-                echo $this->fetch('content');
-            ?>
-            </div>
-        </main>
+    <div id="popover_form" class="ajax_popover_form"></div>
+    <div id="popover_form_large" class="ajax_popover_form ajax_popover_form_large"></div>
+    <div id="popover_form_x_large" class="ajax_popover_form ajax_popover_form_x_large"></div>
+    <div id="popover_matrix" class="ajax_popover_form ajax_popover_matrix"></div>
+    <div id="popover_box" class="popover_box"></div>
+    <div id="confirmation_box"></div>
+    <div id="gray_out"></div>
+    <div id="container">
         <?php
-        echo $this->element('genericElements/assetLoader', [
-            'js' => [
-                'misp-touch',
-                'bootstrap',
-                'bootstrap-timepicker',
-                'bootstrap-datepicker',
-                'bootstrap-colorpicker',
-                'misp',
-                'keyboard-shortcuts-definition',
-                'keyboard-shortcuts',
-            ],
-        ]);
-        // echo $this->element('footer');
-        echo $this->element('sql_dump');
+            echo $this->element('global_menu');
+            $topPadding = '50';
+            if (!empty($debugMode) && $debugMode != 'debugOff') {
+                $topPadding = '0';
+            }
         ?>
-        <div id="ajax_success_container" class="ajax_container">
-            <div id="ajax_success" class="ajax_result ajax_success"></div>
+    </div>
+    <div id="flashContainer" style="padding-top:<?php echo $topPadding; ?>px; !important;">
+        <div id="main-view-container" class="container-fluid">
+            <?php
+                echo $this->Flash->render();
+            ?>
         </div>
-        <div id="ajax_fail_container" class="ajax_container">
-            <div id="ajax_fail" class="ajax_result ajax_fail"></div>
-        </div>
-        <!-- <div class="loading">
-            <div class="spinner"></div>
-            <div class="loadingText"><?php echo __('Loading');?></div>
-        </div> -->
+    </div>
+    <div>
+        <?php
+            echo $this->fetch('content');
+        ?>
+    </div>
+    <?php
+    echo $this->element('genericElements/assetLoader', [
+        'js' => [
+            'misp-touch',
+            'bootstrap',
+            'bootstrap-timepicker',
+            'bootstrap-datepicker',
+            'bootstrap-colorpicker',
+            'misp',
+            'keyboard-shortcuts-definition',
+            'keyboard-shortcuts',
+        ],
+    ]);
+    echo $this->element('footer');
+    echo $this->element('sql_dump');
+    ?>
+    <div id="ajax_success_container" class="ajax_container">
+        <div id="ajax_success" class="ajax_result ajax_success"></div>
+    </div>
+    <div id="ajax_fail_container" class="ajax_container">
+        <div id="ajax_fail" class="ajax_result ajax_fail"></div>
+    </div>
+    <div class="loading">
+        <div class="spinner"></div>
+        <div class="loadingText"><?php echo __('Loading');?></div>
     </div>
     <script>
     <?php
