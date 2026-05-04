@@ -1,4 +1,4 @@
-# DarkMIPS Theme
+# DarkMISP Theme
 
 ![alt text](__assets/Theme_DarkMISP_00001.png) 
 
