@@ -37,7 +37,8 @@
     ?>
 </head>
 <body data-controller="<?= h($this->params['controller']) ?>" data-action="<?= h($this->params['action']) ?>">
-    <div id="root">
+    <div id="root" 
+        class="dark fixed bg-background text-foreground transition-all">
         <div id="popover_form" class="ajax_popover_form"></div>
         <div id="popover_form_large" class="ajax_popover_form ajax_popover_form_large"></div>
         <div id="popover_form_x_large" class="ajax_popover_form ajax_popover_form_x_large"></div>
@@ -55,6 +56,23 @@
                     $topPadding = '0';
                 }
             ?>
+            <main class="dark fixed top-16 left-64 bottom-0 right-0 text-grey-400 overflow-auto bg-background text-foreground transition-all z-30">
+                <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
+                    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
+                </div>
+                <div class="<?= $this->request->here() == '/api/openapi' ? 'bg-white' : 'p-4' ?>">
+                <?php
+                    echo $this->fetch('content');
+                ?>
+                </div>
+            </main>
+            <div id="overlay-root"></div>
+            <script>
+                $('[data-modal]').each(function () {
+                    $(this).appendTo('#overlay-root');
+                });
+            </script>
         </div>
         <div id="flashContainer" style="padding-top:<?php echo $topPadding; ?>px; !important;">
             <div id="main-view-container" class="container-fluid">
@@ -63,18 +81,6 @@
                 ?>
             </div>
         </div>
-        <main class="dark fixed top-16 left-64 bottom-0 right-0 text-grey-400 overflow-auto bg-background text-foreground transition-all">
-            <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
-                <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" ></div>
-            </div>
-
-            <div class="<?= $this->request->here() == '/api/openapi' ? 'bg-white' : 'p-4' ?>">
-            <?php
-                echo $this->fetch('content');
-            ?>
-            </div>
-        </main>
         <?php
         echo $this->element('genericElements/assetLoader', [
             'js' => [

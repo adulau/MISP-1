@@ -791,6 +791,7 @@ class EventsController extends AppController
         $this->set('urlparams', $urlparams);
         $this->set('passedArgsArray', $passedArgsArray);
         $this->set('passedArgs', json_encode($passedArgs));
+        $this->set('rules', $this->__getEventFilterRules());
 
         $extendedUuids = array_filter(array_map(fn($event) => $event['Event']['extends_uuid'] ?? null, $events));
 
@@ -1153,6 +1154,38 @@ class EventsController extends AppController
         }
     }
 
+    private function __getEventFilterRules()
+    {
+        $rules = [
+            'published' => __('Published'),
+            'eventid' => __('Event ID'),
+            'tag' => __('Tag'),
+            'date' => __('Date'),
+            'eventinfo' => __('Event info'),
+            'threatlevel' => __('Threat level'),
+            'distribution' => __('Distribution'),
+            'sharinggroup' => __('Sharing group'),
+            'analysis' => __('Analysis'),
+            'is_extension' => __('Is extension'),
+            'is_extended'  => __('Is extended'),
+            'attribute' => __('Attribute'),
+            'hasproposal' => __('Has proposal'),
+            'timestamp' => __('Last change at'),
+            'publishtimestamp' => __('Published at'),
+            'all' => __('Search in all fields'),
+        ];
+
+        if ($this->_isSiteAdmin()) {
+            $rules['email'] = __('Email');
+        }
+
+        if (Configure::read('MISP.showorg')) {
+            $rules['org'] = __('Organisation');
+        }
+
+        return $rules;
+    }
+
     public function filterEventIndex()
     {
         $passedArgsArray = array();
@@ -1173,7 +1206,7 @@ class EventsController extends AppController
             'is_extension' => 2,
             'is_extended' => 2,
             'timestamp' => array('from' => "", 'until' => ""),
-            'publishtimestamp' => array('from' => "", 'until' => "")
+            'publishtimestamp' => array('from' => "", 'until' => ""),
         );
 
         if ($this->_isSiteAdmin()) {
@@ -1232,28 +1265,6 @@ class EventsController extends AppController
             $tagJSON[] = array('id' => $tagId, 'value' => $tagName);
         }
 
-        $rules = [
-            'published' => __('Published'),
-            'eventid' => __('Event ID'),
-            'tag' => __('Tag'),
-            'date' => __('Date'),
-            'eventinfo' => __('Event info'),
-            'threatlevel' => __('Threat level'),
-            'distribution' => __('Distribution'),
-            'sharinggroup' => __('Sharing group'),
-            'analysis' => __('Analysis'),
-            'is_extension' => __('Is extension'),
-            'is_extended'  => __('Is extended'),
-            'attribute' => __('Attribute'),
-            'hasproposal' => __('Has proposal'),
-            'timestamp' => __('Last change at'),
-            'publishtimestamp' => __('Published at'),
-            'all' => __('Search in all fields'),
-        ];
-
-        if ($this->_isSiteAdmin()) {
-            $rules['email'] = __('Email');
-        }
         if (Configure::read('MISP.showorg')) {
             $orgs = $this->Event->Orgc->find('list', array(
                 'fields' => array('Orgc.id', 'Orgc.name'),
@@ -1261,15 +1272,16 @@ class EventsController extends AppController
             ));
             $this->set('showorg', true);
             $this->set('orgs', $orgs);
-            $rules['org'] = __('Organisation');
         } else {
             $this->set('showorg', false);
         }
+        
         $sharingGroups = $this->Event->SharingGroup->fetchAllAuthorised($this->Auth->user(), 'name', true);
         $this->set('sharingGroups', $sharingGroups);
         $this->set('tags', $tagNames);
         $this->set('tagJSON', json_encode($tagJSON));
-        $this->set('rules', $rules);
+        $this->set('rules', $this->__getEventFilterRules());
+
         $this->layout = false;
     }
 

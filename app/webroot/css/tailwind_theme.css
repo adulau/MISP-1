@@ -42,6 +42,7 @@
   --mispblue: #0088cc;
   --mispdarkblue: #0077bb;
   --mispnight: #1a1f2e;
+  --mispaccentnight: #0f1421;
 }
 
 .dark {
@@ -85,12 +86,14 @@
   --mispblue: #0088cc;
   --mispdarkblue: #0077bb;
   --mispnight: #1a1f2e;
+  --mispaccentnight: #0f1421;
 }
 
 @theme inline {
   --color-mispblue: var(--mispblue);
   --color-mispdarkblue: var(--mispdarkblue);
   --color-mispnight: var(--mispnight);
+  --color-mispaccentnight: var(--mispaccentnight);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

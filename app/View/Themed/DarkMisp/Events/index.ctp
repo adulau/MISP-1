@@ -49,12 +49,12 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
 ?>
 
 
-<div class="space-y-6">
+<div class="space-y-6" >
     <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
             <h1 class="text-3xl font-bold mb-2"><?php echo __('Events');?></h1>
         </div>
-        <button class="flex items-center space-x-2 px-4 py-2 bg-mispblue hover:bg-mispdarkblue rounded-lg transition-colors">
+        <button class="flex items-center space-x-2 px-4 py-2 bg-mispblue hover:bg-mispdarkblue rounded-lg transition-colors cursor-pointer">
             <i class="fas fa-plus"></i>
             <span>Add Event</span>
         </button>
@@ -103,8 +103,8 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
         </div>
         <div class="flex flex-wrap gap-2 mb-4">
             <button type="button"
-                    id="open-modal"
-                    class="px-4 py-2 bg-mispblue text-white rounded">
+                    id="openEventFilterModal"
+                    class="px-4 py-2 bg-mispblue text-white rounded cursor-pointer">
                 <i class="fas fa-filter"></i>
             </button>
 
@@ -168,74 +168,7 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
     </div>
 </div>
 
-
-<div id="modal"
-     class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-
-    <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
-
-        <button type="button"
-                id="close-modal"
-                class="absolute top-2 right-2 text-gray-500">
-            ✕
-        </button>
-
-        <h2 class="text-xl font-bold mb-4">Formular</h2>
-
-        <form class="space-y-4">
-            <input type="text" placeholder="Name"
-                   class="w-full border rounded px-3 py-2">
-
-            <input type="email" placeholder="Email"
-                   class="w-full border rounded px-3 py-2">
-
-            <button type="submit"
-                    class="w-full bg-blue-500 text-white py-2 rounded">
-                Apply
-            </button>
-        </form>
-
-    </div>
-</div>
-
-<script>
-$(function () {
-    $('#open-modal').on('click', function (e) {
-        e.preventDefault();
-
-        $('#modal')
-            .removeClass('hidden')
-            .addClass('flex');
-    });
-
-    $('#close-modal').on('click', function (e) {
-        e.preventDefault();
-
-        $('#modal')
-            .addClass('hidden')
-            .removeClass('flex');
-    });
-
-    // ESC schließt Modal
-    $(document).on('keydown', function (e) {
-        if (e.key === 'Escape') {
-            $('#modal')
-                .addClass('hidden')
-                .removeClass('flex');
-        }
-    });
-
-    // Klick auf Hintergrund schließt Modal
-    $('#modal').on('click', function (e) {
-        if (e.target === this) {
-            $('#modal')
-                .addClass('hidden')
-                .removeClass('flex');
-        }
-    });
-});
-</script>
-
+<?= $this->element('Events/modal_filter_events'); ?>
 
 <div>
     <div>

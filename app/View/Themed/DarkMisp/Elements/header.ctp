@@ -1,5 +1,5 @@
 
-<header class="fixed top-0 left-0 right-0 bg-mispnight border-b border-gray-800 px-6 py-4 flex items-center justify-between z-50 h-16">
+<header class="fixed top-0 left-0 right-0 bg-mispnight border-b border-gray-800 px-6 py-4 flex items-center justify-between z-100 h-16">
 <?php
 if (!empty($me)):
 ?>
@@ -37,7 +37,7 @@ if (!empty($me)):
         class="fixed inset-0 z-10 hidden peer-checked:block">
       </label>
 
-      <div class="absolute right-0 mt-2 w-64 bg-mispnight border border-gray-700 rounded-lg shadow-xl z-20 hidden peer-checked:block">
+      <div class="fixed right-6 top-16 mt-2 w-64 bg-mispnight border border-gray-700 rounded-lg shadow-xl z-[9999] hidden peer-checked:block">
         <div class="py-2">
           <?php if ($this->Acl->canAccess('bookmarks', 'add')): ?>
           <a href="#" class="w-full px-4 py-2 text-left hover:bg-gray-800 flex items-center space-x-2 text-gray-400">
