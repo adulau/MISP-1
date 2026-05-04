@@ -105,7 +105,7 @@
         </div>
         <!-- <div class="loading">
             <div class="spinner"></div>
-            <div class="loadingText"><?php echo __('Loading');?></div>
+            <div class="loadingText"><?php // echo __('Loading');?></div>
         </div> -->
     </div>
     <script>

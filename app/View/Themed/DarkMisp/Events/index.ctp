@@ -46,6 +46,32 @@ $removeFilterUrl = function ($key) use ($filters, $buildFilterUrl) {
 $isMyEventsActive = isset($filters['searchemail']) && $filters['searchemail'] === $me['email'];
 $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $me['org_id'];
 
+$columnsDescription = [
+    'owner_org' => __('Owner org'),
+    'is_extension' => __('Extended event'),
+    'attribute_count' => __('Attribute count'),
+    'creator_user' => __('Creator user'),
+    'tags' => __('Tags'),
+    'clusters' => __('Clusters'),
+    'correlations' => __('Correlations'),
+    'sightings' => __('Sightings'),
+    'proposals' => __('Proposals'),
+    'discussion' => __('Posts'),
+    'report_count' => __('Report count'),
+    'timestamp' => __('Last modified at'),
+    'publish_timestamp' => __('Published at'),
+    'highlights' => __('Highlights'),
+];
+$columnsMenu = [];
+foreach ($possibleColumns as $possibleColumn) {
+    $html = in_array($possibleColumn, $columns, true) ? '<i class="fa fa-check"></i> ' : '<i class="fa fa-check" style="visibility: hidden"></i> ';
+    $html .= $columnsDescription[$possibleColumn];
+    $columnsMenu[] = [
+        'html' => $html,
+        'onClick' => 'eventIndexColumnsToggle',
+        'onClickParams' => [$possibleColumn],
+    ];
+}
 ?>
 
 
@@ -102,6 +128,24 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
             ?>
         </div>
         <div class="flex flex-wrap gap-2 mb-4">
+            <div class="flex flex-wrap gap-2 relative">
+                <input type="checkbox" id="eventsTableColumnOpen" class="peer hidden">
+                <label for="eventsTableColumnOpen"
+                    class="px-4 py-2 bg-mispblue text-white rounded cursor-pointer">
+                    <i class="fa fa-columns"></i>
+                </label>
+                <label for="eventsTableColumnOpen"
+                    class="fixed inset-0 z-10 hidden peer-checked:block">
+                </label>
+                <div class="absolute left-0 top-10 mt-2 w-64 bg-mispnight border border-gray-700 rounded-lg shadow-xl z-[9999] hidden peer-checked:block">
+                    <div class="p-2">
+                        <?= $this->element('Events/event_column_filter', array(
+                            'columnsDescription' => $columnsDescription,
+                            'possibleColumns' => $possibleColumns,
+                        )); ?>
+                    </div>
+                </div>
+            </div>
             <button type="button"
                     id="openEventFilterModal"
                     class="px-4 py-2 bg-mispblue text-white rounded cursor-pointer">
@@ -130,7 +174,6 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
                 ]
             ) ?>
             <?php if (!empty($filters)): ?>
-                
                     <?php foreach ($filters as $key => $value): ?>
                         <span class="inline-flex items-center gap-2 rounded-full bg-success px-3 py-1 text-sm text-slate-700">
                             <span>
@@ -170,7 +213,7 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
 
 <?= $this->element('Events/modal_filter_events'); ?>
 
-<div>
+<div class="mt-4 space-y-6" >
     <div>
         <?php
             $searchScopes = [
@@ -195,142 +238,20 @@ $isOrgEventsActive = isset($filters['searchorg']) && $filters['searchorg'] == $m
             }
             $filterParamsString = implode(' & ', $filterParamsString);
 
-            $columnsDescription = [
-                'owner_org' => __('Owner org'),
-                'is_extension' => __('Extended event'),
-                'attribute_count' => __('Attribute count'),
-                'creator_user' => __('Creator user'),
-                'tags' => __('Tags'),
-                'clusters' => __('Clusters'),
-                'correlations' => __('Correlations'),
-                'sightings' => __('Sightings'),
-                'proposals' => __('Proposals'),
-                'discussion' => __('Posts'),
-                'report_count' => __('Report count'),
-                'timestamp' => __('Last modified at'),
-                'publish_timestamp' => __('Published at'),
-                'highlights' => __('Highlights'),
-            ];
-
-            $columnsMenu = [];
-            foreach ($possibleColumns as $possibleColumn) {
-                $html = in_array($possibleColumn, $columns, true) ? '<i class="fa fa-check"></i> ' : '<i class="fa fa-check" style="visibility: hidden"></i> ';
-                $html .= $columnsDescription[$possibleColumn];
-                $columnsMenu[] = [
-                    'html' => $html,
-                    'onClick' => 'eventIndexColumnsToggle',
-                    'onClickParams' => [$possibleColumn],
-                ];
-            }
-
-            $data = array(
-                'children' => array(
-                    array(
-                        'children' => array(
-                            array(
-                                'id' => 'create-button',
-                                'title' => __('Modify filters'),
-                                'fa-icon' => 'search',
-                                'onClick' => 'getPopup',
-                                'onClickParams' => array(h($urlparams), 'events', 'filterEventIndex')
-                            )
-                        )
-                    ),
-                    array(
-                        'children' => array(
-                            array(
-                                'id' => 'multi-delete-button',
-                                'title' => __('Delete selected events'),
-                                'fa-icon' => 'trash',
-                                'class' => 'hidden mass-delete',
-                                'onClick' => 'multiSelectDeleteEvents'
-                            ),
-                            array(
-                                'id' => 'multi-export-button',
-                                'title' => __('Export selected events'),
-                                'fa-icon' => 'file-export',
-                                'class' => 'hidden mass-export',
-                                'onClick' => 'multiSelectExportEvents'
-                            )
-                        )
-                    ),
-                    array(
-                        'children' => array(
-                            array(
-                                'requirement' => count($passedArgsArray) > 0,
-                                'html' => sprintf(
-                                    '<span class="bold">%s</span>: %s',
-                                    __('Filters'),
-                                    $filterParamsString
-                                )
-                            ),
-                            array(
-                                'requirement' => count($passedArgsArray) > 0,
-                                'url' => $baseurl . '/events/index',
-                                'title' => __('Remove filters'),
-                                'fa-icon' => 'times'
-                            )
-                        )
-                    ),
-                    array(
-                        'children' => array(
-                            array(
-                                'title' => __('My events only'),
-                                'text' => __('My Events'),
-                                'data' => array(
-                                    'searchemail' => h($me['email'])
-                                ),
-                                'class' => 'searchFilterButton',
-                                'active' => isset($passedArgsArray['email']) && $passedArgsArray['email'] === $me['email']
-                            ),
-                            array(
-                                'title' => __('My organisation\'s events only'),
-                                'text' => __('Org Events'),
-                                'data' => array(
-                                    'searchorg' => h($me['org_id'])
-                                ),
-                                'class' => 'searchFilterButton',
-                                'active' => isset($passedArgsArray['org']) && $passedArgsArray['org'] === $me['org_id']
-                            )
-                        )
-                    ),
-                    array(
-                        'children' => array(
-                            array(
-                                'id' => 'simple_filter',
-                                'type' => 'group',
-                                'class' => 'last',
-                                'title' => __('Choose columns to show'),
-                                'fa-icon' => 'columns',
-                                'children' => $columnsMenu,
-                            ),
-                        ),
-                    ),
-                    array(
-                        'type' => 'search',
-                        'button' => __('Filter'),
-                        'placeholder' => __('Enter value to search'),
-                        'data' => '',
-                        'searchScopes' => $searchScopes,
-                        'searchKey' => $searchKey,
-                    )
-                )
-            );
-            if (!$ajax) {
-                echo $this->element('/genericElements/ListTopBar/scaffold', array('data' => $data));
-            }
             echo $this->element('Events/eventIndexTable');
         ?>
-        <p>
+    </div>
+</div>
+<div>
+    <p>
         <?php
         echo $this->Paginator->counter(array(
         'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
         ));
         ?>
-        </p>
-        <div class="pagination">
-            <?= $pagination ?>
-        </div>
+    </p>
+    <div class="pagination">
+        <?= $pagination ?>
     </div>
 </div>
 <script>
@@ -353,5 +274,5 @@ echo $this->element('genericElements/assetLoader', [
     'js' => ['vis', 'jquery-ui.min', 'network-distribution-graph'],
 ]);
 if (!$ajax) {
-    echo $this->element('/genericElements/SideMenu/side_menu', array('menuList' => 'event-collection', 'menuItem' => 'index'));
+    // echo $this->element('/genericElements/SideMenu/side_menu', array('menuList' => 'event-collection', 'menuItem' => 'index'));
 }
